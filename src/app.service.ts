@@ -11,8 +11,8 @@ export class App {
     const PORT = envConfig.PORT || 7000;
 
     app.setGlobalPrefix('/api');
-    app.useStaticAssets(join(__dirname, '..', 'uploads'), {
-      prefix: '/api/', 
+    app.useStaticAssets('/root/uploads', {
+      prefix: '/api/',
     });
 
     app.useGlobalPipes(
@@ -28,7 +28,7 @@ export class App {
     );
 
     app.enableCors({
-      origin: '*', 
+      origin: '*',
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
       allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
       credentials: false,
@@ -44,7 +44,9 @@ export class App {
 
     await app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
-      console.log(`Static files are served from: ${join(__dirname, '..', 'uploads')}`);
+      console.log(
+        `Static files are served from: ${join(__dirname, '..', 'uploads')}`,
+      );
     });
   }
 }
