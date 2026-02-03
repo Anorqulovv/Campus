@@ -8,9 +8,12 @@ import { join } from 'path';
 export class App {
   static async main() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
-    const PORT = envConfig.PORT;
+    const PORT = envConfig.PORT || 7000;
 
     app.setGlobalPrefix('/api');
+    app.useStaticAssets(join(__dirname, '..', 'uploads'), {
+      prefix: '/api/', 
+    });
 
     app.useGlobalPipes(
       new ValidationPipe({
@@ -24,9 +27,6 @@ export class App {
       }),
     );
 
-    app.useStaticAssets(join(__dirname, '..', 'uploads'), {
-      prefix: '/uploads/',
-    });
     app.enableCors({
       origin: '*', 
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
@@ -43,7 +43,8 @@ export class App {
     });
 
     await app.listen(PORT, () => {
-      console.log('server running on port ', PORT);
+      console.log(`Server running on port ${PORT}`);
+      console.log(`Static files are served from: ${join(__dirname, '..', 'uploads')}`);
     });
   }
 }
