@@ -48,11 +48,11 @@ export class AuthService {
 
     await this.userRepo.save(user);
 
-    const payload = { 
-      id: user.id, 
+    const payload = {
+      id: user.id,
       username: user.username,
       role: user.role,
-      isActive: user.isActive 
+      isActive: user.isActive,
     };
     const generatedToken = await this.token.generate(payload);
 
@@ -74,9 +74,9 @@ export class AuthService {
 
   async signIn(dto: SingInDto) {
     const { username, password } = dto;
-    
+
     const user = await this.userRepo.findOne({ where: { username } });
-    
+
     if (!user) {
       throw new BadRequestException('Username or password invalid');
     }
@@ -85,15 +85,15 @@ export class AuthService {
       password,
       user.password,
     );
-    
+
     if (!isMatchPass) {
       throw new BadRequestException('Username or password invalid');
     }
 
-    const payload = { 
-      id: user.id, 
-      role: user.role, 
-      isActive: user.isActive 
+    const payload = {
+      id: user.id,
+      role: user.role,
+      isActive: user.isActive,
     };
     const generatedToken = await this.token.generate(payload);
 

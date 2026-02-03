@@ -25,5 +25,4 @@ export class CreateEventDto {
   @IsNumber()
   @Min(1)
   maxParticipants: number;
-
 }

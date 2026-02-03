@@ -1,9 +1,16 @@
-import { IsNotEmpty, IsNumber, IsOptional, IsPhoneNumber, IsString, IsStrongPassword } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsPhoneNumber,
+  IsString,
+  IsStrongPassword,
+} from 'class-validator';
 
 export class SingUpDto {
-    @IsString()
-    @IsOptional()
-    fullName?: string;
+  @IsString()
+  @IsOptional()
+  fullName?: string;
   @IsString()
   @IsNotEmpty()
   username: string;

@@ -27,6 +27,20 @@ export class App {
     app.useStaticAssets(join(__dirname, '..', 'uploads'), {
       prefix: '/uploads/',
     });
+    app.enableCors({
+      origin: '*', 
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+      credentials: false,
+    });
+
+    app.use((req, res, next) => {
+      if (req.method === 'OPTIONS') {
+        res.status(200).end();
+        return;
+      }
+      next();
+    });
 
     await app.listen(PORT, () => {
       console.log('server running on port ', PORT);
